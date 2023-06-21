@@ -36,7 +36,7 @@ namespace HwReciever
 
             IPHostEntry ipHostEntry = Dns.GetHostEntry("localhost");
             IPAddress ipAddress = ipHostEntry.AddressList[0];
-            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, 8888);
+            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 8889);
             serverSocket = new TcpListener(ipEndPoint);
             serverSocket.Start();
             Console.WriteLine("Asynchonous server socket is listening at: " + ipEndPoint.Address.ToString());
@@ -79,7 +79,7 @@ namespace HwReciever
 
             this.Dispatcher.Invoke(() =>
             {
-                TB_1.Text = result;
+                TextBox1.Text = result;
             });
             
         }
