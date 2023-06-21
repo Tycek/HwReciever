@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +22,67 @@ namespace HwReciever
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static TcpListener serverSocket;
+
         public MainWindow()
         {
             InitializeComponent();
+            StartServer();
+            
         }
+
+        public void StartServer()
+        {
+
+            IPHostEntry ipHostEntry = Dns.GetHostEntry("localhost");
+            IPAddress ipAddress = ipHostEntry.AddressList[0];
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, 8888);
+            serverSocket = new TcpListener(ipEndPoint);
+            serverSocket.Start();
+            Console.WriteLine("Asynchonous server socket is listening at: " + ipEndPoint.Address.ToString());
+            WaitForClients();
+        }
+
+        private void WaitForClients()
+        {
+            serverSocket.BeginAcceptTcpClient(new System.AsyncCallback(OnClientConnected), null);
+        }
+
+        private void OnClientConnected(IAsyncResult asyncResult)
+        {
+            try
+            {
+                TcpClient clientSocket = serverSocket.EndAcceptTcpClient(asyncResult);
+                if (clientSocket != null)
+                    Console.WriteLine("Received connection request from: " + clientSocket.Client.RemoteEndPoint.ToString());
+                HandleClientRequest(clientSocket);
+            }
+            catch
+            {
+                throw;
+            }
+            WaitForClients();
+        }
+
+        private void HandleClientRequest(TcpClient clientSocket)
+        {
+            string result = string.Empty;
+            byte[] data = new byte[256];
+            var stream = clientSocket.GetStream();
+            do
+            {
+                int bytes = stream.Read(data, 0, data.Length);
+                string responseData = Encoding.ASCII.GetString(data, 0, bytes);
+                result += responseData;
+            }
+            while (!result.EndsWith('\0'));
+
+            this.Dispatcher.Invoke(() =>
+            {
+                TB_1.Text = result;
+            });
+            
+        }
+
     }
 }
