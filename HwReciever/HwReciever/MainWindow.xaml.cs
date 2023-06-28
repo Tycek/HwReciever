@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -77,11 +78,20 @@ namespace HwReciever
             }
             while (!result.EndsWith('\0'));
 
-            this.Dispatcher.Invoke(() =>
+            GetDataModel acceptedData = JsonSerializer.Deserialize<GetDataModel>(result.Trim('\0'));
+
+            Dispatcher.Invoke(() =>
             {
                 TextBox1.Text = result;
+                foreach (var element in Utils.FindVisualChildren<Ellipse>(this))
+                {
+                    string id = Metadata.GetInfo(element);
+                    if (id == acceptedData?.LocationId.ToString())
+                    {
+                        element.Fill = new SolidColorBrush(Colors.Green);
+                    }
+                }
             });
-            
         }
 
     }
