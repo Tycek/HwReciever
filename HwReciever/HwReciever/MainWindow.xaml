@@ -5,8 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HwReciever"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
-        <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Margin="193,119,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="362" Height="175"/>
+        <Grid x:Name="Main">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" MinWidth="35"></ColumnDefinition>
+                    <ColumnDefinition Width="1*" MinWidth="35"></ColumnDefinition>
+                    <ColumnDefinition Width="1*" MinWidth="35"></ColumnDefinition>
+                    <ColumnDefinition Width="1*" MinWidth="35"></ColumnDefinition>
+                    <ColumnDefinition Width="1*" MinWidth="35"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" MinHeight="35"></RowDefinition>
+                    <RowDefinition Height="1*" MinHeight="35"></RowDefinition>
+                    <RowDefinition Height="1*" MinHeight="35"></RowDefinition>
+                    <RowDefinition Height="1*" MinHeight="35"></RowDefinition>
+                    <RowDefinition Height="1*" MinHeight="35"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label>L01</Label>
+                    <Ellipse Height="30"  Stroke="Black" Width="30" local:Metadata.Info="1"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label>L02</Label>
+                    <Ellipse Height="30"  Stroke="Black" Width="30" local:Metadata.Info="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label>L03</Label>
+                    <Ellipse Height="30"  Stroke="Black" Width="30" local:Metadata.Info="3"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label>L04</Label>
+                    <Ellipse Height="30"  Stroke="Black" Width="30" local:Metadata.Info="4"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label>L05</Label>
+                    <Ellipse Height="30"  Stroke="Black" Width="30" local:Metadata.Info="5"/>
+                </StackPanel>
+                
+            </Grid>
+            <TextBox Grid.Row="1" x:Name="TextBox1" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" Width="535" Height="20"/>
+        </Grid>
     </Grid>
 </Window>
